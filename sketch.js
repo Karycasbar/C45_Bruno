@@ -13,8 +13,7 @@ function setup(){
 
 //background image
 bg = createSprite(165,485,1,1);
-bg.addImage(bgImg);
-bg.scale = 1.3
+getBackgroundImg();
 
 //creating top and bottom grounds
 bottomGround = createSprite(200,390,800,20);
@@ -48,3 +47,28 @@ function draw() {
         drawSprites();
         
 }
+
+// Usando llamadas a la API para configurar la imagen de fondo de acuerdo al tiempo
+async function getBackgroundImg(){
+  //var response = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
+  var response = await fetch("http://worldtimeapi.org/api/timezone/America/Mexico_City");
+  var responseJSON = await response.json();
+
+  var datetime = responseJSON.datetime;
+  var hour = datetime.slice(11,13);
+  
+  if(hour>=06 && hour<=19){
+    
+    bg.addImage(bgImg);
+    bg.scale = 1.3
+  }
+  else{
+    
+    bg.addImage(bgImg2);
+    bg.scale = 1.5
+    bg.x=200
+    bg.y=200
+  }
+
+}
+
